@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Construtor de Formulários</title>
+    <link rel="stylesheet" href="styles.css">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+</head>
+<body>
+    <div class="container">
+        <!-- Header -->
+        <header class="header">
+            <div class="header-content">
+                <h1><i class="fas fa-clipboard-list"></i> Construtor de Formulários</h1>
+                <div class="header-actions">
+                    <button id="preview-btn" class="btn btn-secondary">
+                        <i class="fas fa-eye"></i> Visualizar
+                    </button>
+                    <button id="publish-btn" class="btn btn-primary">
+                        <i class="fas fa-share"></i> Publicar
+                    </button>
+                </div>
+            </div>
+        </header>
+
+        <!-- Main Content -->
+        <main class="main-content">
+            <!-- Form Builder -->
+            <div class="form-builder">
+                <!-- Form Title Section -->
+                <div class="form-title-section">
+                    <input type="text" id="form-title" class="form-title-input" placeholder="Título do formulário" value="Formulário sem título">
+                    <textarea id="form-description" class="form-description-input" placeholder="Descrição do formulário (opcional)"></textarea>
+                </div>
+
+                <!-- Form Fields Container -->
+                <div id="form-fields" class="form-fields">
+                    <!-- Fields will be added dynamically here -->
+                </div>
+
+                <!-- Add Field Buttons -->
+                <div class="add-field-section">
+                    <h3>Adicionar campo:</h3>
+                    <div class="field-buttons">
+                        <button class="field-btn" data-type="text">
+                            <i class="fas fa-font"></i>
+                            <span>Texto curto</span>
+                        </button>
+                        <button class="field-btn" data-type="textarea">
+                            <i class="fas fa-align-left"></i>
+                            <span>Texto longo</span>
+                        </button>
+                        <button class="field-btn" data-type="radio">
+                            <i class="fas fa-dot-circle"></i>
+                            <span>Múltipla escolha</span>
+                        </button>
+                        <button class="field-btn" data-type="checkbox">
+                            <i class="fas fa-check-square"></i>
+                            <span>Caixas de seleção</span>
+                        </button>
+                        <button class="field-btn" data-type="select">
+                            <i class="fas fa-list"></i>
+                            <span>Lista suspensa</span>
+                        </button>
+                        <button class="field-btn" data-type="email">
+                            <i class="fas fa-envelope"></i>
+                            <span>E-mail</span>
+                        </button>
+                        <button class="field-btn" data-type="tel">
+                            <i class="fas fa-phone"></i>
+                            <span>Telefone</span>
+                        </button>
+                        <button class="field-btn" data-type="date">
+                            <i class="fas fa-calendar"></i>
+                            <span>Data</span>
+                        </button>
+                        <button class="field-btn" data-type="number">
+                            <i class="fas fa-hashtag"></i>
+                            <span>Número</span>
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Preview Panel -->
+            <div id="preview-panel" class="preview-panel hidden">
+                <div class="preview-header">
+                    <h2>Visualização do Formulário</h2>
+                    <button id="close-preview" class="btn btn-secondary">
+                        <i class="fas fa-times"></i> Fechar
+                    </button>
+                </div>
+                <div id="preview-content" class="preview-content">
+                    <!-- Preview will be generated here -->
+                </div>
+            </div>
+        </main>
+
+        <!-- Modal for Google Sheets Integration -->
+        <div id="publish-modal" class="modal hidden">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h3>Publicar Formulário</h3>
+                    <button id="close-modal" class="close-btn">
+                        <i class="fas fa-times"></i>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div class="form-group">
+                        <label for="sheet-url">URL da Planilha Google:</label>
+                        <input type="url" id="sheet-url" placeholder="https://docs.google.com/spreadsheets/d/...">
+                        <small>Cole aqui o link da sua planilha Google Sheets</small>
+                    </div>
+                    <div class="form-group">
+                        <label for="sheet-name">Nome da Aba (opcional):</label>
+                        <input type="text" id="sheet-name" placeholder="Planilha1" value="Planilha1">
+                    </div>
+                    <div class="instructions">
+                        <h4>Instruções:</h4>
+                        <ol>
+                            <li>Crie uma planilha no Google Sheets</li>
+                            <li>Torne a planilha pública para edição</li>
+                            <li>Cole o link da planilha acima</li>
+                            <li>Clique em "Gerar Link"</li>
+                        </ol>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button id="generate-link" class="btn btn-primary">
+                        <i class="fas fa-link"></i> Gerar Link do Formulário
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Success Modal -->
+        <div id="success-modal" class="modal hidden">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h3>Formulário Publicado!</h3>
+                    <button class="close-btn" onclick="closeSuccessModal()">
+                        <i class="fas fa-times"></i>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <p>Seu formulário foi publicado com sucesso!</p>
+                    <div class="form-group">
+                        <label>Link do formulário:</label>
+                        <div class="link-container">
+                            <input type="text" id="form-link" readonly>
+                            <button id="copy-link" class="btn btn-secondary">
+                                <i class="fas fa-copy"></i> Copiar
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
+
